@@ -1,0 +1,14 @@
+.gradient {
+    background: #ffffff;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(0, 0, 0, 1) 35%
+    );
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: -1000;
+    mix-blend-mode: soft-light;
+    opacity: 0.7;
+}

@@ -1,0 +1,17 @@
+"use client";
+
+import { useEffect } from "react";
+
+import styles from "./background.module.css";
+
+export default function Background() {
+    const backgroundColors = ["#FF2AB8", "#FF822A", "#FF3B2A", "#2a55ff"];
+    const selectedColor =
+        backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
+
+    useEffect(() => {
+        document.body.style.backgroundColor = selectedColor;
+    }, [selectedColor]);
+
+    return <div className={styles.gradient}></div>;
+}
