@@ -3,19 +3,10 @@
     max-width: 400px;
     max-height: 400px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.output {
-    background-color: black;
     aspect-ratio: 1/1;
-    width: 90%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    background-color: black;
 }
 
 .flexbox_1 {
@@ -92,4 +83,11 @@
     grid-row-gap: 0px;
     aspect-ratio: 1/1;
     gap: 10px;
+}
+
+.fixed_size {
+    width: 720px !important;
+    max-width: 720px;
+    height: 720px !important;
+    max-height: 720px;
 }

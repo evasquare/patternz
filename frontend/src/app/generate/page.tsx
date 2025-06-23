@@ -1,7 +1,8 @@
 "use client";
 
+import html2canvas from "html2canvas";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Loading from "../components/Loading";
 import Pattern from "../components/Pattern";
@@ -17,7 +18,7 @@ export default function Generate() {
 
     useEffect(() => {
         (async () => {
-            await delay(3000);
+            // await delay(3000);
             setIsLoading(false);
         })();
     }, []);
@@ -38,41 +39,52 @@ export default function Generate() {
     const myPatterns: ShapePattern[] = [
         {
             grid: [
-                [true, true, false, true],
-                [true, false, true, false],
-                [true, true, true, true],
-                [true, false, true, false],
+                [true, true, true],
+                [true, false, false],
+                [true, true, true],
             ],
             shape: SHAPE.SQUARE,
         },
         {
             grid: [
-                [true, false, true, false],
-                [true, true, true, true],
-                [true, true, false, true],
-                [true, false, true, false],
+                [true, true, true],
+                [true, false, false],
+                [true, true, true],
             ],
             shape: SHAPE.DIAMOND,
         },
         {
             grid: [
-                [true, true, true, true],
-                [true, true, false, true],
-                [true, false, true, false],
-                [true, false, true, false],
+                [true, true, true],
+                [true, false, false],
+                [true, true, true],
             ],
             shape: SHAPE.CIRCLE,
         },
         {
             grid: [
-                [false, true, true, true],
-                [true, true, false, true],
-                [true, false, true, false],
-                [true, false, true, false],
+                [true, true, true],
+                [true, false, false],
+                [true, true, true],
             ],
-            shape: SHAPE.SQUARE,
+            shape: SHAPE.DIAMOND,
         },
     ];
+
+    const outputBoxRef = useRef<HTMLDivElement>(null);
+
+    const saveAsImage = async () => {
+        const screenshotTarget = document.getElementById(
+            "patternz-canvas"
+        ) as HTMLCanvasElement | null;
+        if (!screenshotTarget) return;
+
+        const base64image = screenshotTarget.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = base64image;
+        link.download = "pattern.png";
+        link.click();
+    };
 
     return (
         <>
@@ -96,18 +108,7 @@ export default function Generate() {
                             <div className={styles.gap} />
 
                             <div className={styles.output_box}>
-                                <div className={styles.output}>
-                                    <div className={styles.pattern_grid}>
-                                        {myPatterns.map((myPattern, index) => {
-                                            return (
-                                                <Pattern
-                                                    key={index}
-                                                    shapePattern={myPattern}
-                                                />
-                                            );
-                                        })}
-                                    </div>
-                                </div>
+                                <Pattern shapePatterns={myPatterns} />
                             </div>
 
                             <div className={styles.gap} />
@@ -116,9 +117,10 @@ export default function Generate() {
                                 <Link href={"/change-theme"}>
                                     <button>Change theme</button>
                                 </Link>
-                                <Link href={"/change-theme"}>
-                                    <button>Save as image</button>
-                                </Link>
+
+                                <button onClick={saveAsImage}>
+                                    Save as image
+                                </button>
                             </div>
                         </div>
                         <div className={styles.flexbox_2}>
