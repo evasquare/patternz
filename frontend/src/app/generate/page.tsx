@@ -18,7 +18,7 @@ export default function Generate() {
 
     useEffect(() => {
         (async () => {
-            // await delay(3000);
+            await delay(3000);
             setIsLoading(false);
         })();
     }, []);
@@ -40,7 +40,7 @@ export default function Generate() {
         {
             grid: [
                 [true, true, true],
-                [true, false, false],
+                [true, false, true],
                 [true, true, true],
             ],
             shape: SHAPE.SQUARE,
@@ -67,7 +67,7 @@ export default function Generate() {
                 [true, false, false],
                 [true, true, true],
             ],
-            shape: SHAPE.DIAMOND,
+            shape: SHAPE.SQUARE,
         },
     ];
 
