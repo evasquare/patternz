@@ -4,7 +4,7 @@ import "normalize.css";
 
 import localFont from "next/font/local";
 
-import Background from "./components/Background";
+import ClientProviders from "./ClientProviders";
 
 const pretendard = localFont({
     src: "../fonts/PretendardVariable.ttf",
@@ -26,8 +26,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${pretendard.variable} font-pretendard`}>
-                <Background />
-                {children}
+                <ClientProviders>{children}</ClientProviders>
             </body>
         </html>
     );

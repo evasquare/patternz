@@ -1,8 +1,7 @@
 "use client";
 
-import html2canvas from "html2canvas";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Loading from "../components/Loading";
 import Pattern from "../components/Pattern";
@@ -41,7 +40,7 @@ export default function Generate() {
             grid: [
                 [true, true, true],
                 [true, false, true],
-                [true, true, true],
+                [true, true, false],
             ],
             shape: SHAPE.SQUARE,
         },
@@ -49,29 +48,27 @@ export default function Generate() {
             grid: [
                 [true, true, true],
                 [true, false, false],
-                [true, true, true],
+                [false, true, true],
             ],
             shape: SHAPE.DIAMOND,
         },
         {
             grid: [
-                [true, true, true],
-                [true, false, false],
+                [false, true, true],
+                [true, false, true],
                 [true, true, true],
             ],
-            shape: SHAPE.CIRCLE,
+            shape: SHAPE.HEART,
         },
         {
             grid: [
                 [true, true, true],
                 [true, false, false],
-                [true, true, true],
+                [false, true, true],
             ],
-            shape: SHAPE.SQUARE,
+            shape: SHAPE.SMALLER_RECTANGLE,
         },
     ];
-
-    const outputBoxRef = useRef<HTMLDivElement>(null);
 
     const saveAsImage = async () => {
         const screenshotTarget = document.getElementById(
@@ -95,11 +92,11 @@ export default function Generate() {
             ) : (
                 <>
                     {" "}
-                    <div className={styles.flexbox_1}>
-                        <div className={styles.flexbox_2}></div>
-                        <div className={styles.flexbox_2}>
+                    <div className={styles.flexbox1}>
+                        <div className={styles.flexbox2}></div>
+                        <div className={styles.flexbox2}>
                             <h2
-                                className={`${styles.remove_heading_default_margin} ${styles.h2_margin_bottom}`}
+                                className={`${styles.h2TitleCenter} ${styles.removeHeadingDefaultMargin} ${styles.h2MarginBottom}`}
                             >
                                 Done! Here&apos;s your pattern!
                             </h2>
@@ -107,14 +104,16 @@ export default function Generate() {
 
                             <div className={styles.gap} />
 
-                            <div className={styles.output_box}>
-                                <Pattern shapePatterns={myPatterns} />
+                            <div className={styles.outputWrapper}>
+                                <div className={styles.output}>
+                                    <Pattern shapePatterns={myPatterns} />
+                                </div>
                             </div>
 
                             <div className={styles.gap} />
 
-                            <div className={styles.row_flex}>
-                                <Link href={"/change-theme"}>
+                            <div className={styles.rowFlex}>
+                                <Link href={"/themes"}>
                                     <button>Change theme</button>
                                 </Link>
 
@@ -123,13 +122,13 @@ export default function Generate() {
                                 </button>
                             </div>
                         </div>
-                        <div className={styles.flexbox_2}>
+                        <div className={styles.flexbox2}>
                             <div
-                                className={`${styles.translate_y_bottom} ${styles.text_black_color}`}
+                                className={`${styles.translateYBottom} ${styles.textBlackColor}`}
                             >
                                 Developed by{" "}
                                 <a
-                                    className={`${styles.text_black_color} ${styles.text_bold}`}
+                                    className={`${styles.textBlackColor} ${styles.textBold}`}
                                     href="https://github.com/evasquare"
                                 >
                                     Eva

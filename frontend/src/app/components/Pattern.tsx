@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 
-import { Shape, SHAPE, ShapePattern } from "../lib/patternType";
+import { SHAPE, ShapePattern } from "../lib/patternType";
 import styles from "./pattern.module.css";
 
 const CANVAS_WIDTH = 800;
 const ROW_NUMBER = 2;
-const OUTER_GAP = 50;
-const INNER_GAP = 30;
+const OUTER_GAP = 30;
+const INNER_GAP = 20;
 const ONE_PATTERN_WIDTH = (CANVAS_WIDTH - 2 * OUTER_GAP - INNER_GAP) / 2;
 
 export default function Pattern({
@@ -100,21 +100,19 @@ export default function Pattern({
                 };
                 switch (shapePattern.shape) {
                     case SHAPE.SQUARE:
-                        {
-                            await renderImage("shapes/square.png");
-                        }
+                        await renderImage("shapes/square.png");
                         break;
                     case SHAPE.CIRCLE:
-                        {
-                            await renderImage("shapes/circle.png");
-                        }
+                        await renderImage("shapes/circle.png");
                         break;
                     case SHAPE.DIAMOND:
-                        {
-                            {
-                                await renderImage("shapes/diamond.png");
-                            }
-                        }
+                        await renderImage("shapes/diamond.png");
+                        break;
+                    case SHAPE.SMALLER_RECTANGLE:
+                        await renderImage("shapes/smaller-rectangle.png");
+                        break;
+                    case SHAPE.HEART:
+                        await renderImage("shapes/heart.png");
                         break;
 
                     default:

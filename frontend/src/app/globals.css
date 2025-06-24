@@ -28,3 +28,7 @@ button:active {
 html {
     color: white;
 }
+
+.scroll-lock {
+    overflow: hidden;
+}

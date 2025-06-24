@@ -1,4 +1,4 @@
-.flexbox_1 {
+.flexbox1 {
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.flexbox_2 {
+.flexbox2 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,10 +25,4 @@
     animation: rotating 1.5s linear infinite;
     width: 150px;
     height: 150px;
-}
-
-.row_flex {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
 }
