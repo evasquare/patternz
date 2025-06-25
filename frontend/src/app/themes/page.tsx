@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, scale } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -68,14 +69,26 @@ const Themes = () => {
                     >
                         <div className={styles.icon}>
                             {selectedTheme === THEME.GRAYSCALE ? (
-                                <div className={styles.checkMark}>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.2,
+                                        scale: {
+                                            type: "spring",
+                                            visualDuration: 0,
+                                            bounce: 0.2,
+                                        },
+                                    }}
+                                    className={styles.checkMark}
+                                >
                                     <Image
                                         src="/assets/check-mark.svg"
                                         alt="check-mark"
                                         width={25}
                                         height={25}
                                     />
-                                </div>
+                                </motion.div>
                             ) : null}
                         </div>
                         <h3>Grayscale</h3>
@@ -95,14 +108,26 @@ const Themes = () => {
                                 fill
                             />
                             {selectedTheme === THEME.PRIDE ? (
-                                <div className={styles.checkMark}>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: {
+                                            type: "spring",
+                                            visualDuration: 0.0,
+                                            bounce: 0.2,
+                                        },
+                                    }}
+                                    className={styles.checkMark}
+                                >
                                     <Image
                                         src="/assets/check-mark.svg"
                                         alt="check-mark"
                                         width={25}
                                         height={25}
                                     />
-                                </div>
+                                </motion.div>
                             ) : null}
                         </div>
                         <h3>Pride</h3>
@@ -122,14 +147,26 @@ const Themes = () => {
                                 fill
                             />
                             {selectedTheme === THEME.TRANSGENDER ? (
-                                <div className={styles.checkMark}>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: {
+                                            type: "spring",
+                                            visualDuration: 0.0,
+                                            bounce: 0.2,
+                                        },
+                                    }}
+                                    className={styles.checkMark}
+                                >
                                     <Image
                                         src="/assets/check-mark.svg"
                                         alt="check-mark"
                                         width={25}
                                         height={25}
                                     />
-                                </div>
+                                </motion.div>
                             ) : null}
                         </div>
                         <h3>Transgender</h3>
@@ -149,14 +186,26 @@ const Themes = () => {
                                 fill
                             />
                             {selectedTheme === THEME.NONBINARY ? (
-                                <div className={styles.checkMark}>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: {
+                                            type: "spring",
+                                            visualDuration: 0.0,
+                                            bounce: 0.2,
+                                        },
+                                    }}
+                                    className={styles.checkMark}
+                                >
                                     <Image
                                         src="/assets/check-mark.svg"
                                         alt="check-mark"
                                         width={25}
                                         height={25}
                                     />
-                                </div>
+                                </motion.div>
                             ) : null}
                         </div>
                         <h3>Non-binary</h3>
