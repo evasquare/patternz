@@ -16,24 +16,8 @@ export default function Generate({
     params: Promise<{ slug: string }>;
 }) {
     const [isLoading, setIsLoading] = useState(true);
-    const [isTaskFinished, setIsTaskFinished] = useState(false);
 
     const [url, setUrl] = useState("Getting URL..");
-
-    useEffect(() => {
-        (async () => {
-            // await delay(3000);
-            setIsLoading(false);
-        })();
-    }, []);
-
-    useEffect(() => {
-        (async () => {
-            if (isTaskFinished) {
-                setIsLoading(false);
-            }
-        })();
-    }, [isTaskFinished]);
 
     useEffect(() => {
         (async () => {
@@ -58,11 +42,9 @@ export default function Generate({
                 await fetch(`http://localhost:8080/get/${slug}`)
             ).json();
 
-            console.log(response);
-
             setMyPatterns(response.patterns);
         })();
-    });
+    }, [params]);
 
     const saveAsImage = async () => {
         const screenshotTarget = document.getElementById(
@@ -79,73 +61,63 @@ export default function Generate({
 
     return (
         <>
-            {isLoading ? (
-                <>
-                    <Loading />
-                </>
-            ) : (
-                <>
-                    <div className={styles.flexbox1}>
-                        <div
-                            className={`${styles.flexbox2} ${styles.marginYTop}`}
+            <>
+                <div className={styles.flexbox1}>
+                    <div className={`${styles.flexbox2} ${styles.marginYTop}`}>
+                        <Link href="/" className="hover">
+                            <Image
+                                src="/assets/buttons/home-button.svg"
+                                alt="home"
+                                width={50}
+                                height={50}
+                            />
+                        </Link>
+                    </div>
+                    <div className={styles.flexbox2}>
+                        <h2
+                            className={`${styles.h2TitleCenter} ${styles.removeHeadingDefaultMargin} ${styles.h2MarginBottom}`}
                         >
-                            <Link href="/" className="hover">
-                                <Image
-                                    src="/assets/buttons/home-button.svg"
-                                    alt="home"
-                                    width={50}
-                                    height={50}
-                                />
+                            Done! Here&apos;s your pattern!
+                        </h2>
+                        <span>{url}</span>
+
+                        <div className={styles.gap} />
+
+                        <div className={styles.outputWrapper}>
+                            <div className={styles.output}>
+                                {patterns ? (
+                                    <Pattern shapePatterns={patterns} />
+                                ) : null}
+                            </div>
+                        </div>
+
+                        <div className={styles.gap} />
+
+                        <div className={styles.rowFlex}>
+                            <Link href={"/themes"}>
+                                <button className="hover">Change theme</button>
                             </Link>
-                        </div>
-                        <div className={styles.flexbox2}>
-                            <h2
-                                className={`${styles.h2TitleCenter} ${styles.removeHeadingDefaultMargin} ${styles.h2MarginBottom}`}
-                            >
-                                Done! Here&apos;s your pattern!
-                            </h2>
-                            <span>{url}</span>
 
-                            <div className={styles.gap} />
-
-                            <div className={styles.outputWrapper}>
-                                <div className={styles.output}>
-                                    {patterns ? (
-                                        <Pattern shapePatterns={patterns} />
-                                    ) : null}
-                                </div>
-                            </div>
-
-                            <div className={styles.gap} />
-
-                            <div className={styles.rowFlex}>
-                                <Link href={"/themes"}>
-                                    <button className="hover">
-                                        Change theme
-                                    </button>
-                                </Link>
-
-                                <button className="hover" onClick={saveAsImage}>
-                                    Save as image
-                                </button>
-                            </div>
-                        </div>
-                        <div className={styles.flexbox2}>
-                            <div
-                                className={`${styles.marginYBottom} ${styles.textBlackColor}`}
-                            >
-                                Developed by{" "}
-                                <a
-                                    className={`${styles.textBlackColor} ${styles.textBold}`}
-                                    href="https://github.com/evasquare"
-                                >
-                                    Eva
-                                </a>
-                            </div>
+                            <button className="hover" onClick={saveAsImage}>
+                                Save as image
+                            </button>
                         </div>
                     </div>
-                </>
-            )}
+                    <div className={styles.flexbox2}>
+                        <div
+                            className={`${styles.marginYBottom} ${styles.textBlackColor}`}
+                        >
+                            Developed by{" "}
+                            <a
+                                className={`${styles.textBlackColor} ${styles.textBold}`}
+                                href="https://github.com/evasquare"
+                            >
+                                Eva
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </>
         </>
     );
 }

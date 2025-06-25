@@ -1,196 +1,89 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import Loading from "../components/Loading";
-import Pattern from "../components/Pattern";
 import { SHAPE, ShapePattern } from "../lib/patternType";
 import { delay } from "../lib/utilFunctions";
-import styles from "./page.module.css";
 
 export default function Generate() {
-    const [isLoading, setIsLoading] = useState(true);
     const [isTaskFinished, setIsTaskFinished] = useState(false);
-
-    const [url, setUrl] = useState("Getting URL..");
+    const [isDelayOver, setIsDelayOver] = useState(false);
+    const [url, setUrl] = useState("");
 
     useEffect(() => {
         (async () => {
-            // await delay(3000);
-            setIsLoading(false);
+            await delay(3000);
+            setIsDelayOver(true);
         })();
     }, []);
 
     useEffect(() => {
         (async () => {
-            if (isTaskFinished) {
-                setIsLoading(false);
+            console.log(isDelayOver);
+            if (isTaskFinished && isDelayOver) {
+                window.location.href = "/" + url;
             }
         })();
-    }, [isTaskFinished]);
+    }, [isTaskFinished, isDelayOver, url]);
 
-    useEffect(() => {
-        // Send request to backend and get url.
-        setUrl("Getting URL..");
-    }, []);
+    const randomlyGeneratePatterns = () => {
+        const returningPatterns: ShapePattern[] = [];
 
-    const myPatterns: ShapePattern[] = [
-        {
-            grid: [
-                [true, true, true],
-                [true, true, false],
-                [true, false, true],
-            ],
-            shape: SHAPE.SQUARE,
-        },
-        {
-            grid: [
-                [true, false, false],
-                [true, true, true],
-                [false, true, true],
-            ],
-            shape: SHAPE.DIAMOND,
-        },
-        {
-            grid: [
-                [false, true, true],
-                [true, false, true],
-                [true, true, true],
-            ],
-            shape: SHAPE.HEART,
-        },
-        {
-            grid: [
-                [true, true, true],
-                [false, true, true],
-                [true, false, false],
-            ],
-            shape: SHAPE.SMALLER_RECTANGLE,
-        },
-        {
-            grid: [
-                [false, true, true],
-                [true, true, true],
-                [true, false, false],
-            ],
-            shape: SHAPE.CIRCLE,
-        },
-        {
-            grid: [
-                [true, true, true],
-                [true, false, false],
-                [false, true, true],
-            ],
-            shape: SHAPE.SMALLER_RECTANGLE,
-        },
-        {
-            grid: [
-                [false, true, true],
-                [true, true, true],
-                [true, false, false],
-            ],
-            shape: SHAPE.HEART,
-        },
-        {
-            grid: [
-                [true, false, false],
-                [false, true, true],
-                [true, true, true],
-            ],
-            shape: SHAPE.SMALLER_RECTANGLE,
-        },
-        {
-            grid: [
-                [true, false, false],
-                [true, true, true],
-                [false, true, true],
-            ],
-            shape: SHAPE.DIAMOND,
-        },
-    ];
+        for (let index = 0; index < 9; index++) {
+            const shapeList = [
+                SHAPE.SQUARE,
+                SHAPE.CIRCLE,
+                SHAPE.DIAMOND,
+                SHAPE.HEART,
+                SHAPE.SMALLER_RECTANGLE,
+            ];
 
-    const saveAsImage = async () => {
-        const screenshotTarget = document.getElementById(
-            "patternz-canvas"
-        ) as HTMLCanvasElement | null;
-        if (!screenshotTarget) return;
+            const selectedShape =
+                shapeList[Math.floor(Math.random() * shapeList.length)];
 
-        const base64image = screenshotTarget.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.href = base64image;
-        link.download = "pattern.png";
-        link.click();
+            const newGrid: boolean[][] = [];
+
+            for (let index = 0; index < 3; index++) {
+                newGrid.push([]);
+                for (let index = 0; index < 3; index++) {
+                    const booleanList = [true, true, true, false, false];
+                    const selectedBoolean =
+                        booleanList[
+                            Math.floor(Math.random() * booleanList.length)
+                        ];
+
+                    newGrid[newGrid.length - 1].push(selectedBoolean);
+                }
+            }
+            const newPattern = { grid: newGrid, shape: selectedShape };
+            returningPatterns.push(newPattern);
+        }
+        return returningPatterns;
     };
+    useEffect(() => {
+        (async () => {
+            console.log(randomlyGeneratePatterns());
+            const response: string = await (
+                await fetch(`http://localhost:8080/add`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        patterns: randomlyGeneratePatterns(),
+                    }),
+                })
+            ).text();
+
+            setUrl(response);
+            setIsTaskFinished(true);
+        })();
+    }, []);
 
     return (
         <>
-            {isLoading ? (
-                <>
-                    <Loading />
-                </>
-            ) : (
-                <>
-                    <div className={styles.flexbox1}>
-                        <div
-                            className={`${styles.flexbox2} ${styles.marginYTop}`}
-                        >
-                            <Link href="/" className="hover">
-                                <Image
-                                    src="/assets/buttons/home-button.svg"
-                                    alt="home"
-                                    width={50}
-                                    height={50}
-                                />
-                            </Link>
-                        </div>
-                        <div className={styles.flexbox2}>
-                            <h2
-                                className={`${styles.h2TitleCenter} ${styles.removeHeadingDefaultMargin} ${styles.h2MarginBottom}`}
-                            >
-                                Done! Here&apos;s your pattern!
-                            </h2>
-                            <span>{url}</span>
-
-                            <div className={styles.gap} />
-
-                            <div className={styles.outputWrapper}>
-                                <div className={styles.output}>
-                                    <Pattern shapePatterns={myPatterns} />
-                                </div>
-                            </div>
-
-                            <div className={styles.gap} />
-
-                            <div className={styles.rowFlex}>
-                                <Link href={"/themes"}>
-                                    <button className="hover">
-                                        Change theme
-                                    </button>
-                                </Link>
-
-                                <button className="hover" onClick={saveAsImage}>
-                                    Save as image
-                                </button>
-                            </div>
-                        </div>
-                        <div className={styles.flexbox2}>
-                            <div
-                                className={`${styles.marginYBottom} ${styles.textBlackColor}`}
-                            >
-                                Developed by{" "}
-                                <a
-                                    className={`${styles.textBlackColor} ${styles.textBold}`}
-                                    href="https://github.com/evasquare"
-                                >
-                                    Eva
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
+            <Loading />
         </>
     );
 }
