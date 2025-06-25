@@ -5,8 +5,8 @@ import styles from "./pattern.module.css";
 
 const CANVAS_WIDTH = 800;
 const ROW_NUMBER = 3;
-const OUTER_GAP = 40;
-const INNER_GAP = 10;
+const OUTER_GAP = 30;
+const INNER_GAP = 20;
 const ONE_PATTERN_WIDTH =
     (CANVAS_WIDTH - 2 * OUTER_GAP - INNER_GAP * (ROW_NUMBER - 1)) / ROW_NUMBER;
 
@@ -37,15 +37,8 @@ export default function Pattern({
         // Drawing Coordination
         const drawingCord = { x: 0, y: 0 };
 
-        console.log("=========");
-
         (async () => {
             for (const shapePattern of shapePatterns) {
-                console.log(
-                    shapePattern,
-                    currentRowPatternIndex,
-                    currentColumnPatternIndex
-                );
                 // Move to the next coordination.
                 drawingCord.x =
                     OUTER_GAP +
@@ -55,8 +48,6 @@ export default function Pattern({
                     OUTER_GAP +
                     ONE_PATTERN_WIDTH * currentColumnPatternIndex +
                     INNER_GAP * currentColumnPatternIndex;
-
-                console.log("A!");
 
                 const renderImage = async (imagePath: string) => {
                     const image = new Image();
@@ -75,8 +66,6 @@ export default function Pattern({
                         x: drawingCord.x,
                         y: drawingCord.y,
                     };
-
-                    console.log("B!");
 
                     // Iterate through each row.
                     for (let i = 0; i < shapePattern.grid.length; i++) {
