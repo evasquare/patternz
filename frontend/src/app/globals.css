@@ -13,16 +13,7 @@ button {
     font-weight: 500;
     border-radius: 12px;
 
-    transition: all 0.2s ease-in-out;
-    transform: none;
-
     cursor: pointer;
-}
-button:hover {
-    transform: scale(1.13);
-}
-button:active {
-    transform: scale(1.13);
 }
 
 html {
@@ -31,4 +22,47 @@ html {
 
 .scroll-lock {
     overflow: hidden;
+}
+
+.no-js {
+    background-color: black;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.hover {
+    transition: all 0.2s ease-in-out;
+    transform: none;
+}
+.hover:hover {
+    transform: scale(1.13);
+}
+.hover:active {
+    transform: scale(1.13);
+}
+
+.hover2 {
+    transition: all 0.2s ease-in-out;
+    transform: none;
+}
+.hover2:hover {
+    transform: scale(1.08);
+}
+.hover2:active {
+    transform: scale(1.08);
+}
+
+.mouse-pointer {
+    cursor: pointer;
 }

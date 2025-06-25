@@ -19,7 +19,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -29,12 +29,12 @@
     align-items: center;
 }
 
-.translateYTop {
-    transform: translateY(50px);
+.marginYTop {
+    margin-bottom: 40px;
 }
 
-.translateYBottom {
-    transform: translateY(-50px);
+.marginYBottom {
+    margin-top: 70px;
 }
 
 .textBlackColor {

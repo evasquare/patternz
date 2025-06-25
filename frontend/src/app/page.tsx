@@ -23,7 +23,7 @@ export default function Home() {
                     },
                 }}
                 className={styles.img}
-                src="/shapes/circle.png"
+                src="/assets/shapes/circle-white.png"
             ></motion.img>,
             <motion.img
                 key={0}
@@ -38,7 +38,7 @@ export default function Home() {
                     },
                 }}
                 className={styles.img}
-                src="/shapes/diamond.png"
+                src="/assets/shapes/diamond-white.png"
             ></motion.img>,
             <motion.img
                 key={0}
@@ -53,7 +53,7 @@ export default function Home() {
                     },
                 }}
                 className={styles.img}
-                src="/shapes/heart.png"
+                src="/assets/shapes/heart-white.png"
             ></motion.img>,
             <motion.img
                 key={0}
@@ -68,7 +68,7 @@ export default function Home() {
                     },
                 }}
                 className={styles.img}
-                src="/shapes/smaller-rectangle.png"
+                src="/assets/shapes/smaller-rectangle-white.png"
             ></motion.img>,
             <motion.img
                 key={0}
@@ -83,7 +83,7 @@ export default function Home() {
                     },
                 }}
                 className={styles.img}
-                src="/shapes/square.png"
+                src="/assets/shapes/square-white.png"
             ></motion.img>,
         ];
         setSelectedLogo(logos[Math.floor(Math.random() * logos.length)]);
@@ -92,9 +92,7 @@ export default function Home() {
     return (
         <>
             <div className={styles.flexbox1}>
-                <div className={styles.flexbox2}>
-                    <div className={styles.translateYTop}></div>
-                </div>
+                <div className={styles.flexbox2}></div>
                 <div className={styles.flexbox2}>
                     {selectedLogo ? (
                         <div className={styles.imgContainer}>
@@ -104,12 +102,12 @@ export default function Home() {
 
                     <h2>Create a pattern in a really easy way.</h2>
                     <Link href={"/generate"}>
-                        <button>Generate</button>
+                        <button className="hover">Generate</button>
                     </Link>
                 </div>
                 <div className={styles.flexbox2}>
                     <div
-                        className={`${styles.translateYBottom} ${styles.textBlackColor}`}
+                        className={`${styles.marginYBottom} ${styles.textBlackColor}`}
                     >
                         Developed by{" "}
                         <a

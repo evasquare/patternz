@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 511 511" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-4204.38,-2185.12)">
+        <g id="home-button" transform="matrix(0.962055,0,0,0.957747,210.366,259.993)">
+            <rect x="4151.55" y="2010.06" width="530.323" height="532.708" style="fill:none;"/>
+            <clipPath id="_clip1">
+                <rect x="4151.55" y="2010.06" width="530.323" height="532.708"/>
+            </clipPath>
+            <g clip-path="url(#_clip1)">
+                <g transform="matrix(1.03947,0,0,1.04412,-184.803,-112.194)">
+                    <circle cx="4426.78" cy="2287.68" r="255.092"/>
+                    <g transform="matrix(0.99997,0,0,1,-35.0788,-153.821)">
+                        <path d="M4610.3,2440.22C4553.82,2439.42 4459.11,2439.34 4313.68,2440.22L4438.57,2315.33L4313.68,2440.22L4441.12,2567.67" style="stroke:white;stroke-width:50px;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

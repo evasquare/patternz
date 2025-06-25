@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { SHAPE, ShapePattern } from "../lib/patternType";
+import { THEME } from "../lib/themesType";
 import styles from "./pattern.module.css";
 
 const CANVAS_WIDTH = 800;
@@ -15,8 +16,62 @@ export default function Pattern({
 }: {
     shapePatterns: ShapePattern[];
 }) {
+    const [symbolColor, setSymbolColor] = useState<"WHITE" | "BLACK">("WHITE");
+
+    const getThemedImage = (imageName: string, color: "WHITE" | "BLACK") => {
+        switch (color) {
+            case "WHITE":
+                return `/assets/shapes/${imageName}-white.png`;
+                break;
+            case "BLACK":
+                return `/assets/shapes/${imageName}-black.png`;
+                break;
+        }
+    };
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
+    const handleTheme = async (
+        canvas: HTMLCanvasElement,
+        context: CanvasRenderingContext2D
+    ) => {
+        const selectedTheme = localStorage.getItem("theme");
+
+        const drawBackground = async (backgroundImage: string) => {
+            const image = new Image();
+            image.src = backgroundImage;
+
+            const imageLoadPromise = new Promise((resolve, reject) => {
+                image.addEventListener("load", () => resolve(image));
+                image.addEventListener("error", (error) => reject(error));
+            });
+            await imageLoadPromise;
+
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+
+        switch (selectedTheme) {
+            case null:
+                context.fillStyle = "black";
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                setSymbolColor("WHITE");
+                break;
+            case THEME.PRIDE:
+                await drawBackground("/assets/themes/pride.svg");
+                setSymbolColor("BLACK");
+                break;
+            case THEME.TRANSGENDER:
+                await drawBackground("/assets/themes/transgender.svg");
+                setSymbolColor("BLACK");
+                break;
+            case THEME.NONBINARY:
+                await drawBackground("/assets/themes/nonbinary.svg");
+                setSymbolColor("BLACK");
+                break;
+
+            default:
+                return;
+        }
+    };
     useEffect(() => {
         // Setting up canvas.
         const canvas = canvasRef.current;
@@ -24,20 +79,19 @@ export default function Pattern({
 
         if (!canvas || !context) return;
 
-        context.fillStyle = "black";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = "white";
-
-        // ------------------------
-
-        // Initialize variables to track row and column number.
-        let currentRowPatternIndex = 0;
-        let currentColumnPatternIndex = 0;
-
-        // Drawing Coordination
-        const drawingCord = { x: 0, y: 0 };
-
         (async () => {
+            await handleTheme(canvas, context);
+            context.fillStyle = "white";
+
+            // ------------------------
+
+            // Initialize variables to track row and column number.
+            let currentRowPatternIndex = 0;
+            let currentColumnPatternIndex = 0;
+
+            // Drawing Coordination
+            const drawingCord = { x: 0, y: 0 };
+
             for (const shapePattern of shapePatterns) {
                 // Move to the next coordination.
                 drawingCord.x =
@@ -90,19 +144,27 @@ export default function Pattern({
                 };
                 switch (shapePattern.shape) {
                     case SHAPE.SQUARE:
-                        await renderImage("shapes/square.png");
+                        await renderImage(
+                            getThemedImage("square", symbolColor)
+                        );
                         break;
                     case SHAPE.CIRCLE:
-                        await renderImage("shapes/circle.png");
+                        await renderImage(
+                            getThemedImage("circle", symbolColor)
+                        );
                         break;
                     case SHAPE.DIAMOND:
-                        await renderImage("shapes/diamond.png");
+                        await renderImage(
+                            getThemedImage("diamond", symbolColor)
+                        );
                         break;
                     case SHAPE.SMALLER_RECTANGLE:
-                        await renderImage("shapes/smaller-rectangle.png");
+                        await renderImage(
+                            getThemedImage("smaller-rectangle", symbolColor)
+                        );
                         break;
                     case SHAPE.HEART:
-                        await renderImage("shapes/heart.png");
+                        await renderImage(getThemedImage("heart", symbolColor));
                         break;
 
                     default:
@@ -119,7 +181,7 @@ export default function Pattern({
                 }
             }
         })();
-    }, [canvasRef, shapePatterns]);
+    }, [canvasRef, shapePatterns, symbolColor]);
 
     return (
         <canvas

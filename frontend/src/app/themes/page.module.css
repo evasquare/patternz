@@ -1,93 +1,48 @@
-.outputBox {
-    width: 100vw;
-    max-width: 400px;
-    max-height: 400px;
-
-    aspect-ratio: 1/1;
-
-    position: relative;
-    background-color: black;
-}
-
-.flexbox_1 {
+.flexbox1 {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
-.flexbox_2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.topBar {
+    margin-bottom: 40px;
 }
 
-.flexbox_2 .gap {
-    height: 40px;
-}
-.translate_y_top {
-    transform: translateY(50px);
-}
-
-.translate_y_bottom {
-    transform: translateY(-50px);
-}
-
-.text_black_color {
-    color: black;
-}
-
-.text_bold {
-    font-weight: bold;
-}
-
-@keyframes rotating {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.rotating {
-    animation: rotating 1.5s linear infinite;
-    width: 150px;
-    height: 150px;
-}
-
-.row_flex {
+.item {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    align-items: center;
+    column-gap: 10px;
 }
 
-.remove_heading_default_margin {
-    margin: 0;
+.items {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
 }
 
-.h2_margin_bottom {
-    margin-bottom: 10px;
-}
-
-.pattern_grid {
-    width: 85%;
-    height: 85%;
+.icon {
+    background-color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     position: relative;
-
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    aspect-ratio: 1/1;
-    gap: 10px;
 }
 
-.fixed_size {
-    width: 720px !important;
-    max-width: 720px;
-    height: 720px !important;
-    max-height: 720px;
+.image {
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.checkMark {
+    position: relative;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin: 5px 0 0 5px;
 }

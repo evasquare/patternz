@@ -25,7 +25,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${pretendard.variable} font-pretendard`}>
+            <body
+                className={`${pretendard.variable} font-pretendard scroll-lock`}
+            >
+                <div className="no-js hidden">
+                    JavaScript is required for this website.
+                </div>
                 <ClientProviders>{children}</ClientProviders>
             </body>
         </html>

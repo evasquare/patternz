@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -17,7 +18,7 @@ export default function Generate() {
 
     useEffect(() => {
         (async () => {
-            await delay(3000);
+            // await delay(3000);
             setIsLoading(false);
         })();
     }, []);
@@ -39,15 +40,15 @@ export default function Generate() {
         {
             grid: [
                 [true, true, true],
-                [true, false, true],
                 [true, true, false],
+                [true, false, true],
             ],
             shape: SHAPE.SQUARE,
         },
         {
             grid: [
-                [true, true, true],
                 [true, false, false],
+                [true, true, true],
                 [false, true, true],
             ],
             shape: SHAPE.DIAMOND,
@@ -63,10 +64,50 @@ export default function Generate() {
         {
             grid: [
                 [true, true, true],
+                [false, true, true],
+                [true, false, false],
+            ],
+            shape: SHAPE.SMALLER_RECTANGLE,
+        },
+        {
+            grid: [
+                [false, true, true],
+                [true, true, true],
+                [true, false, false],
+            ],
+            shape: SHAPE.CIRCLE,
+        },
+        {
+            grid: [
+                [true, true, true],
                 [true, false, false],
                 [false, true, true],
             ],
             shape: SHAPE.SMALLER_RECTANGLE,
+        },
+        {
+            grid: [
+                [false, true, true],
+                [true, true, true],
+                [true, false, false],
+            ],
+            shape: SHAPE.HEART,
+        },
+        {
+            grid: [
+                [true, false, false],
+                [false, true, true],
+                [true, true, true],
+            ],
+            shape: SHAPE.SMALLER_RECTANGLE,
+        },
+        {
+            grid: [
+                [true, false, false],
+                [true, true, true],
+                [false, true, true],
+            ],
+            shape: SHAPE.DIAMOND,
         },
     ];
 
@@ -91,9 +132,19 @@ export default function Generate() {
                 </>
             ) : (
                 <>
-                    {" "}
                     <div className={styles.flexbox1}>
-                        <div className={styles.flexbox2}></div>
+                        <div
+                            className={`${styles.flexbox2} ${styles.marginYTop}`}
+                        >
+                            <Link href="/" className="hover">
+                                <Image
+                                    src="/assets/buttons/home-button.svg"
+                                    alt="home"
+                                    width={50}
+                                    height={50}
+                                />
+                            </Link>
+                        </div>
                         <div className={styles.flexbox2}>
                             <h2
                                 className={`${styles.h2TitleCenter} ${styles.removeHeadingDefaultMargin} ${styles.h2MarginBottom}`}
@@ -114,17 +165,19 @@ export default function Generate() {
 
                             <div className={styles.rowFlex}>
                                 <Link href={"/themes"}>
-                                    <button>Change theme</button>
+                                    <button className="hover">
+                                        Change theme
+                                    </button>
                                 </Link>
 
-                                <button onClick={saveAsImage}>
+                                <button className="hover" onClick={saveAsImage}>
                                     Save as image
                                 </button>
                             </div>
                         </div>
                         <div className={styles.flexbox2}>
                             <div
-                                className={`${styles.translateYBottom} ${styles.textBlackColor}`}
+                                className={`${styles.marginYBottom} ${styles.textBlackColor}`}
                             >
                                 Developed by{" "}
                                 <a

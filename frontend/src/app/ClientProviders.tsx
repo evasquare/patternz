@@ -14,7 +14,7 @@ const ClientProviders = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         if (pathName === "/themes") {
-            setBackgroundColors(["#646464"]);
+            setBackgroundColors(["#999999"]);
         } else {
             setBackgroundColors(undefined);
         }
@@ -35,6 +35,16 @@ const ClientProviders = ({ children }: { children: React.ReactNode }) => {
         updateSetIsDisplayAllowed();
         window.addEventListener("resize", updateSetIsDisplayAllowed);
     }, []);
+
+    useEffect(() => {
+        const elements = document.getElementsByClassName("no-js");
+
+        for (const element of elements) {
+            element.classList.toggle("no-js", false);
+            document.body.classList.toggle("scroll-lock", false);
+        }
+    }, []);
+
     return (
         <>
             {isDisplayAllowed ? null : (
