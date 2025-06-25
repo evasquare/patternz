@@ -7,7 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddModel {
+public class Pattern {
 
-    private ArrayList<Pattern> patterns;
+    private long id;
+    private ArrayList<ArrayList<Boolean>> grid;
+    private Shape shape;
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddModel {
+public class PatternGroup {
 
     private ArrayList<Pattern> patterns;
 }

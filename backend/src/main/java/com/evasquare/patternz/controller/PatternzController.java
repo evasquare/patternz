@@ -1,5 +1,6 @@
 package com.evasquare.patternz.controller;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -9,10 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.evasquare.patternz.entity.Pattern;
+import com.evasquare.patternz.entity.PatternEntity;
+import com.evasquare.patternz.entity.PatternGroupEntity;
 import com.evasquare.patternz.model.AddModel;
 import com.evasquare.patternz.model.GetModel;
-import com.evasquare.patternz.repository.PatternRepository;
+import com.evasquare.patternz.repository.PatternGroupRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -20,24 +22,49 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PatternzController {
 
-    private final PatternRepository patternRepository;
+    private final PatternGroupRepository patternGroupRepository;
 
     @GetMapping("/get")
-    public ResponseEntity<Pattern> getPattern(@RequestBody GetModel body) {
-        com.evasquare.patternz.entity.Pattern foundPattern = patternRepository.findByUuid(body.getUuid()).get();
+    public ResponseEntity<PatternGroupEntity> getPattern(@RequestBody GetModel body) {
+        com.evasquare.patternz.entity.PatternGroupEntity foundPattern = patternGroupRepository.findByUuid(body.getUuid()).get();
         return ResponseEntity.status(HttpStatus.OK).body(foundPattern);
     }
 
     @PostMapping("/add")
     public ResponseEntity<String> addPattern(@RequestBody AddModel body) {
-        com.evasquare.patternz.entity.Pattern newPattern = new com.evasquare.patternz.entity.Pattern();
 
-        newPattern.setGrid(body.getGrid());
+        var patterns = body.getPatterns();
+        if (patterns.size() != 9) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("It can only contain 9 patterns.");
+        }
+
+        ArrayList<PatternEntity> newPatternEntities = new ArrayList<>();
+
+        for (var pattern : patterns) {
+            PatternEntity newPatternEntity = new PatternEntity();
+            newPatternEntity.setGrid(pattern.getGrid());
+            newPatternEntity.setId(pattern.getId());
+            newPatternEntity.setShape(pattern.getShape());
+            newPatternEntities.add(newPatternEntity);
+
+            var grids = pattern.getGrid();
+            if (grids.size() != 3) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Grid size must be 3*3.");
+            }
+
+            for (var grid : grids) {
+                if (grid.size() != 3) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Grid size must be 3*3.");
+                }
+            }
+        }
+
+        com.evasquare.patternz.entity.PatternGroupEntity newPatternGroup = new com.evasquare.patternz.entity.PatternGroupEntity();
+
+        newPatternGroup.setPatterns(newPatternEntities);
         String newUUID = UUID.randomUUID().toString();
-        newPattern.setUuid(newUUID);
-        newPattern.setShape(body.getShape());
-        patternRepository.save(newPattern);
-
+        newPatternGroup.setUuid(newUUID);
+        patternGroupRepository.save(newPatternGroup);
         return ResponseEntity.status(HttpStatus.OK).body(newUUID);
     }
 
