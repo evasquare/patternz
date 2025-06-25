@@ -4,10 +4,11 @@ import { SHAPE, ShapePattern } from "../lib/patternType";
 import styles from "./pattern.module.css";
 
 const CANVAS_WIDTH = 800;
-const ROW_NUMBER = 2;
-const OUTER_GAP = 30;
-const INNER_GAP = 20;
-const ONE_PATTERN_WIDTH = (CANVAS_WIDTH - 2 * OUTER_GAP - INNER_GAP) / 2;
+const ROW_NUMBER = 3;
+const OUTER_GAP = 40;
+const INNER_GAP = 10;
+const ONE_PATTERN_WIDTH =
+    (CANVAS_WIDTH - 2 * OUTER_GAP - INNER_GAP * (ROW_NUMBER - 1)) / ROW_NUMBER;
 
 export default function Pattern({
     shapePatterns,
@@ -86,8 +87,8 @@ export default function Pattern({
                                     drawingCord.x,
                                     drawingCord.y,
                                     // Added 1 for an outline
-                                    ONE_PATTERN_WIDTH / 3 + 1,
-                                    ONE_PATTERN_WIDTH / 3 + 1
+                                    ONE_PATTERN_WIDTH / 3,
+                                    ONE_PATTERN_WIDTH / 3
                                 );
                             }
                             drawingCord.x += ONE_PATTERN_WIDTH / 3;
