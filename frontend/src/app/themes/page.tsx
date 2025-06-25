@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, scale } from "motion/react";
+import { motion } from "motion/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { THEME, Theme } from "../lib/themesType";
