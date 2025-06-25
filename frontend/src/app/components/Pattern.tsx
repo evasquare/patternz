@@ -130,8 +130,8 @@ export default function Pattern({
                                     drawingCord.x,
                                     drawingCord.y,
                                     // Added 1 for an outline
-                                    ONE_PATTERN_WIDTH / 3,
-                                    ONE_PATTERN_WIDTH / 3
+                                    ONE_PATTERN_WIDTH / 3 + 1,
+                                    ONE_PATTERN_WIDTH / 3 + 1
                                 );
                             }
                             drawingCord.x += ONE_PATTERN_WIDTH / 3;
