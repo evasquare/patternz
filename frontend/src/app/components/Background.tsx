@@ -13,12 +13,12 @@ export default function Background({
         backgroundColors = ["#FF2AB8", "#FF822A", "#FF3B2A", "#2a55ff"];
     }
 
-    const selectedColor =
+    const selectedBackgroundColor =
         backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
 
     useEffect(() => {
-        document.body.style.backgroundColor = selectedColor;
-    }, [selectedColor]);
+        document.body.style.backgroundColor = selectedBackgroundColor;
+    }, [selectedBackgroundColor]);
 
     return <div className={styles.gradient}></div>;
 }

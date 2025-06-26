@@ -16,9 +16,10 @@ export default function Pattern({
 }: {
     shapePatterns: ShapePattern[];
 }) {
+    // Use "WHITE" as a default symbol drawing color.
     const [symbolColor, setSymbolColor] = useState<"WHITE" | "BLACK">("WHITE");
 
-    const getThemedImage = (imageName: string, color: "WHITE" | "BLACK") => {
+    const getColoredImage = (imageName: string, color: "WHITE" | "BLACK") => {
         switch (color) {
             case "WHITE":
                 return `/assets/shapes/${imageName}-white.png`;
@@ -51,6 +52,7 @@ export default function Pattern({
 
         switch (selectedTheme) {
             case null:
+            case "GRAYSCALE":
                 context.fillStyle = "black";
                 context.fillRect(0, 0, canvas.width, canvas.height);
                 setSymbolColor("WHITE");
@@ -67,9 +69,6 @@ export default function Pattern({
                 await drawBackground("/assets/themes/nonbinary.svg");
                 setSymbolColor("BLACK");
                 break;
-
-            default:
-                return;
         }
     };
     useEffect(() => {
@@ -82,8 +81,6 @@ export default function Pattern({
         (async () => {
             await handleTheme(canvas, context);
             context.fillStyle = "white";
-
-            // ------------------------
 
             // Initialize variables to track row and column number.
             let currentRowPatternIndex = 0;
@@ -142,33 +139,32 @@ export default function Pattern({
                             initialCord.y + (ONE_PATTERN_WIDTH / 3) * (i + 1);
                     }
                 };
+
                 switch (shapePattern.shape) {
                     case SHAPE.SQUARE:
                         await renderImage(
-                            getThemedImage("square", symbolColor)
+                            getColoredImage("square", symbolColor)
                         );
                         break;
                     case SHAPE.CIRCLE:
                         await renderImage(
-                            getThemedImage("circle", symbolColor)
+                            getColoredImage("circle", symbolColor)
                         );
                         break;
                     case SHAPE.DIAMOND:
                         await renderImage(
-                            getThemedImage("diamond", symbolColor)
+                            getColoredImage("diamond", symbolColor)
                         );
                         break;
                     case SHAPE.SMALLER_RECTANGLE:
                         await renderImage(
-                            getThemedImage("smaller-rectangle", symbolColor)
+                            getColoredImage("smaller-rectangle", symbolColor)
                         );
                         break;
                     case SHAPE.HEART:
-                        await renderImage(getThemedImage("heart", symbolColor));
-                        break;
-
-                    default:
-                        return;
+                        await renderImage(
+                            getColoredImage("heart", symbolColor)
+                        );
                         break;
                 }
 

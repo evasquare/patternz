@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import Loading from "../components/Loading";
+import config from "../lib/config.json";
 import { SHAPE, ShapePattern } from "../lib/patternType";
 import { delay } from "../lib/utilFunctions";
 
@@ -20,7 +21,6 @@ export default function Generate() {
 
     useEffect(() => {
         (async () => {
-            console.log(isDelayOver);
             if (isTaskFinished && isDelayOver) {
                 window.location.href = "/" + url;
             }
@@ -63,9 +63,8 @@ export default function Generate() {
     };
     useEffect(() => {
         (async () => {
-            console.log(randomlyGeneratePatterns());
             const response: string = await (
-                await fetch(`http://localhost:8080/add`, {
+                await fetch(`${config.publicApiUrl}/add`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

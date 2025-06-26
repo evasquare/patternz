@@ -76,7 +76,7 @@ const Themes = () => {
                                         scale: {
                                             type: "spring",
                                             visualDuration: 0,
-                                            bounce: 0.2,
+                                            bounce: 0.5,
                                         },
                                     }}
                                     className={styles.checkMark}
@@ -111,11 +111,11 @@ const Themes = () => {
                                     initial={{ opacity: 0, scale: 0 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{
-                                        duration: 0.4,
+                                        duration: 0.2,
                                         scale: {
                                             type: "spring",
                                             visualDuration: 0.0,
-                                            bounce: 0.2,
+                                            bounce: 0.5,
                                         },
                                     }}
                                     className={styles.checkMark}
@@ -150,11 +150,11 @@ const Themes = () => {
                                     initial={{ opacity: 0, scale: 0 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{
-                                        duration: 0.4,
+                                        duration: 0.2,
                                         scale: {
                                             type: "spring",
                                             visualDuration: 0.0,
-                                            bounce: 0.2,
+                                            bounce: 0.5,
                                         },
                                     }}
                                     className={styles.checkMark}
@@ -189,11 +189,11 @@ const Themes = () => {
                                     initial={{ opacity: 0, scale: 0 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{
-                                        duration: 0.4,
+                                        duration: 0.2,
                                         scale: {
                                             type: "spring",
                                             visualDuration: 0.0,
-                                            bounce: 0.2,
+                                            bounce: 0.5,
                                         },
                                     }}
                                     className={styles.checkMark}

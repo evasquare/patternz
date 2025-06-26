@@ -1,6 +1,9 @@
 package com.evasquare.patternz.entity;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.evasquare.patternz.model.Shape;
 
@@ -28,4 +31,7 @@ public class PatternEntity {
 
     @Enumerated(EnumType.STRING)
     private Shape shape;
+
+    @CreationTimestamp
+    private Timestamp createdAt;
 }

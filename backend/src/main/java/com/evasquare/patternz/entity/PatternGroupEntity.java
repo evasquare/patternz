@@ -1,6 +1,9 @@
 package com.evasquare.patternz.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -28,4 +31,7 @@ public class PatternGroupEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
     private List<PatternEntity> patterns;
+
+    @CreationTimestamp
+    private Timestamp createdAt;
 }

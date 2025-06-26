@@ -15,7 +15,7 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
     title: "Patternz",
-    description: "Generate patterns at ease.",
+    description: "Create a pattern in a really easy way.",
 };
 
 export default function RootLayout({

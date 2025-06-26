@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { hostname } from "os";
 import { useEffect, useState } from "react";
 
-import Loading from "../components/Loading";
 import Pattern from "../components/Pattern";
+import config from "../lib/config.json";
 import { ShapePattern } from "../lib/patternType";
 import styles from "./page.module.css";
 
@@ -15,34 +14,33 @@ export default function Generate({
 }: {
     params: Promise<{ slug: string }>;
 }) {
-    const [isLoading, setIsLoading] = useState(true);
-
     const [url, setUrl] = useState("Getting URL..");
 
     useEffect(() => {
         (async () => {
-            const { slug } = await params;
-
-            setUrl("http://" + hostname() + "/" + slug);
+            setUrl(window.location.href);
         })();
     }, [params]);
 
-    const [patterns, setMyPatterns] = useState<ShapePattern[] | null>(null);
+    const [displayingPatterns, setDisplayingPatterns] = useState<
+        ShapePattern[] | null
+    >(null);
+
     useEffect(() => {
         (async () => {
             const { slug } = await params;
 
-            interface Response {
+            interface GetResponse {
                 id: number;
                 uuid: string;
                 patterns: ShapePattern[];
             }
 
-            const response: Response = await (
-                await fetch(`http://localhost:8080/get/${slug}`)
+            const response: GetResponse = await (
+                await fetch(`${config.publicApiUrl}/get/${slug}`)
             ).json();
 
-            setMyPatterns(response.patterns);
+            setDisplayingPatterns(response.patterns);
         })();
     }, [params]);
 
@@ -51,12 +49,11 @@ export default function Generate({
             "patternz-canvas"
         ) as HTMLCanvasElement | null;
         if (!screenshotTarget) return;
-
         const base64image = screenshotTarget.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.href = base64image;
-        link.download = "pattern.png";
-        link.click();
+        const downloadLink = document.createElement("a");
+        downloadLink.href = base64image;
+        downloadLink.download = "pattern.png";
+        downloadLink.click();
     };
 
     return (
@@ -79,14 +76,18 @@ export default function Generate({
                         >
                             Done! Here&apos;s your pattern!
                         </h2>
-                        <span>{url}</span>
+                        <Link href={url} className={styles.urlLink}>
+                            {url}
+                        </Link>
 
                         <div className={styles.gap} />
 
                         <div className={styles.outputWrapper}>
                             <div className={styles.output}>
-                                {patterns ? (
-                                    <Pattern shapePatterns={patterns} />
+                                {displayingPatterns ? (
+                                    <Pattern
+                                        shapePatterns={displayingPatterns}
+                                    />
                                 ) : null}
                             </div>
                         </div>
@@ -97,7 +98,6 @@ export default function Generate({
                             <Link href={"/themes"}>
                                 <button className="hover">Change theme</button>
                             </Link>
-
                             <button className="hover" onClick={saveAsImage}>
                                 Save as image
                             </button>
