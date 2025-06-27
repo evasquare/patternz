@@ -20,45 +20,20 @@ const ClientProviders = ({ children }: { children: React.ReactNode }) => {
         }
     }, [pathName]);
 
-    const [isDisplayAllowed, setIsDisplayAllowed] = useState(true);
-    useEffect(() => {
-        const updateSetIsDisplayAllowed = () => {
-            document.body.classList.toggle("scroll-lock");
-            if (window.innerHeight < 745) {
-                setIsDisplayAllowed(false);
-            } else {
-                setIsDisplayAllowed(true);
-            }
-        };
-
-        // Initially run the function
-        updateSetIsDisplayAllowed();
-        window.addEventListener("resize", updateSetIsDisplayAllowed);
-    }, []);
-
-    useEffect(() => {
+    const onload = () => {
         const elements = document.getElementsByClassName("no-js");
 
         for (const element of elements) {
             element.classList.toggle("no-js", false);
             document.body.classList.toggle("scroll-lock", false);
         }
-    }, []);
+    };
 
     return (
-        <>
-            {isDisplayAllowed ? null : (
-                <div className={styles.displayBlocked}>
-                    <h2>Window size is too small!</h2>
-                    <span>
-                        Please resize your window. (Or rotate your phone.)
-                    </span>
-                </div>
-            )}
-
+        <div onLoad={onload}>
             <Background backgroundColors={backgroundColors} />
             {children}
-        </>
+        </div>
     );
 };
 
