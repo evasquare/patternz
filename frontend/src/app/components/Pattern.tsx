@@ -19,14 +19,14 @@ export default function Pattern({
     // Use "WHITE" as a default symbol drawing color.
     const [symbolColor, setSymbolColor] = useState<"WHITE" | "BLACK">("WHITE");
 
-    const getColoredImage = (imageName: string, color: "WHITE" | "BLACK") => {
-        switch (color) {
-            case "WHITE":
-                return `/assets/shapes/${imageName}-white.png`;
-                break;
-            case "BLACK":
-                return `/assets/shapes/${imageName}-black.png`;
-                break;
+    const getColoredImage = async (
+        imageName: string,
+        color: "WHITE" | "BLACK"
+    ) => {
+        if (color === "WHITE") {
+            return `/assets/shapes/${imageName}-white.png`;
+        } else {
+            return `/assets/shapes/${imageName}-black.png`;
         }
     };
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -71,6 +71,7 @@ export default function Pattern({
                 break;
         }
     };
+
     useEffect(() => {
         // Setting up canvas.
         const canvas = canvasRef.current;
@@ -143,27 +144,30 @@ export default function Pattern({
                 switch (shapePattern.shape) {
                     case SHAPE.SQUARE:
                         await renderImage(
-                            getColoredImage("square", symbolColor)
+                            await getColoredImage("square", symbolColor)
                         );
                         break;
                     case SHAPE.CIRCLE:
                         await renderImage(
-                            getColoredImage("circle", symbolColor)
+                            await getColoredImage("circle", symbolColor)
                         );
                         break;
                     case SHAPE.DIAMOND:
                         await renderImage(
-                            getColoredImage("diamond", symbolColor)
+                            await getColoredImage("diamond", symbolColor)
                         );
                         break;
                     case SHAPE.SMALLER_RECTANGLE:
                         await renderImage(
-                            getColoredImage("smaller-rectangle", symbolColor)
+                            await getColoredImage(
+                                "smaller-rectangle",
+                                symbolColor
+                            )
                         );
                         break;
                     case SHAPE.HEART:
                         await renderImage(
-                            getColoredImage("heart", symbolColor)
+                            await getColoredImage("heart", symbolColor)
                         );
                         break;
                 }
