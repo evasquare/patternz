@@ -38,7 +38,7 @@ export default function RootLayout({
             <body
                 className={`${pretendard.variable} font-pretendard scroll-lock`}
             >
-                <div className="no-js hidden">
+                <div className="no-js">
                     JavaScript is required for this website.
                 </div>
                 <ClientProviders>{children}</ClientProviders>
