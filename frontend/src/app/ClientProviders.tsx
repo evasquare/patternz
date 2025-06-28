@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import styles from "./clientproviders.module.css";
 import Background from "./components/Background";
 
 const ClientProviders = ({ children }: { children: React.ReactNode }) => {
@@ -22,11 +21,10 @@ const ClientProviders = ({ children }: { children: React.ReactNode }) => {
 
     const onload = () => {
         const elements = document.getElementsByClassName("no-js");
-
         for (const element of elements) {
             element.classList.toggle("no-js", false);
-            document.body.classList.toggle("scroll-lock", false);
         }
+        document.body.classList.toggle("scroll-lock", false);
     };
 
     return (

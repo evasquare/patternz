@@ -16,6 +16,16 @@ const pretendard = localFont({
 export const metadata: Metadata = {
     title: "Patternz",
     description: "Create a pattern in a really easy way.",
+    twitter: {
+        title: "Patternz",
+        images: {
+            url: "/thumbnail.png",
+            width: 1280,
+            height: 720,
+            alt: "Patternz banner",
+        },
+        description: "Create a pattern in a really easy way.",
+    },
 };
 
 export default function RootLayout({

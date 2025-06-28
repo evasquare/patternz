@@ -16,7 +16,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -31,11 +31,13 @@
 }
 
 .marginYTop {
+    margin-top: 70px;
     margin-bottom: 40px;
 }
 
 .marginYBottom {
     margin-top: 70px;
+    margin-bottom: 70px;
 }
 
 .textBlackColor {
