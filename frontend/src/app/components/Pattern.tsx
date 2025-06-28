@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { SHAPE, ShapePattern } from "../lib/patternType";
 import { THEME } from "../lib/themesType";
@@ -16,24 +16,20 @@ export default function Pattern({
 }: {
     shapePatterns: ShapePattern[];
 }) {
-    // Use "WHITE" as a default symbol drawing color.
-    const [symbolColor, setSymbolColor] = useState<"WHITE" | "BLACK">("WHITE");
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const getColoredImage = async (
-        imageName: string,
-        color: "WHITE" | "BLACK"
-    ) => {
+    const getColoredImage = (imageName: string, color: "WHITE" | "BLACK") => {
         if (color === "WHITE") {
             return `/assets/shapes/${imageName}-white.png`;
         } else {
             return `/assets/shapes/${imageName}-black.png`;
         }
     };
-    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const handleTheme = async (
         canvas: HTMLCanvasElement,
-        context: CanvasRenderingContext2D
+        context: CanvasRenderingContext2D,
+        symbolColorInformation: { symbolColor: "WHITE" | "BLACK" }
     ) => {
         const selectedTheme = localStorage.getItem("theme");
 
@@ -55,19 +51,19 @@ export default function Pattern({
             case "GRAYSCALE":
                 context.fillStyle = "black";
                 context.fillRect(0, 0, canvas.width, canvas.height);
-                setSymbolColor("WHITE");
+                symbolColorInformation.symbolColor = "WHITE";
                 break;
             case THEME.PRIDE:
                 await drawBackground("/assets/themes/pride.svg");
-                setSymbolColor("BLACK");
+                symbolColorInformation.symbolColor = "BLACK";
                 break;
             case THEME.TRANSGENDER:
                 await drawBackground("/assets/themes/transgender.svg");
-                setSymbolColor("BLACK");
+                symbolColorInformation.symbolColor = "BLACK";
                 break;
             case THEME.NONBINARY:
                 await drawBackground("/assets/themes/nonbinary.svg");
-                setSymbolColor("BLACK");
+                symbolColorInformation.symbolColor = "BLACK";
                 break;
         }
     };
@@ -80,7 +76,11 @@ export default function Pattern({
         if (!canvas || !context) return;
 
         (async () => {
-            await handleTheme(canvas, context);
+            const symbolColorInformation = {
+                symbolColor: "WHITE" as "WHITE" | "BLACK",
+            };
+            await handleTheme(canvas, context, symbolColorInformation);
+
             context.fillStyle = "white";
 
             // Initialize variables to track row and column number.
@@ -91,6 +91,46 @@ export default function Pattern({
             const drawingCord = { x: 0, y: 0 };
 
             for (const shapePattern of shapePatterns) {
+                let coloredImage = null;
+
+                switch (shapePattern.shape) {
+                    case SHAPE.CIRCLE:
+                        coloredImage = getColoredImage(
+                            "circle",
+                            symbolColorInformation.symbolColor
+                        );
+                        break;
+                    case SHAPE.DIAMOND:
+                        coloredImage = getColoredImage(
+                            "diamond",
+                            symbolColorInformation.symbolColor
+                        );
+                        break;
+                    case SHAPE.HEART:
+                        coloredImage = getColoredImage(
+                            "heart",
+                            symbolColorInformation.symbolColor
+                        );
+                        break;
+                    case SHAPE.SMALLER_RECTANGLE:
+                        coloredImage = getColoredImage(
+                            "smaller-rectangle",
+                            symbolColorInformation.symbolColor
+                        );
+                        break;
+                    case SHAPE.SQUARE:
+                        coloredImage = getColoredImage(
+                            "square",
+                            symbolColorInformation.symbolColor
+                        );
+                        break;
+                    default:
+                        break;
+                }
+
+                if (!coloredImage) {
+                    return;
+                }
                 // Move to the next coordination.
                 drawingCord.x =
                     OUTER_GAP +
@@ -143,32 +183,19 @@ export default function Pattern({
 
                 switch (shapePattern.shape) {
                     case SHAPE.SQUARE:
-                        await renderImage(
-                            await getColoredImage("square", symbolColor)
-                        );
+                        await renderImage(coloredImage);
                         break;
                     case SHAPE.CIRCLE:
-                        await renderImage(
-                            await getColoredImage("circle", symbolColor)
-                        );
+                        await renderImage(coloredImage);
                         break;
                     case SHAPE.DIAMOND:
-                        await renderImage(
-                            await getColoredImage("diamond", symbolColor)
-                        );
+                        await renderImage(coloredImage);
                         break;
                     case SHAPE.SMALLER_RECTANGLE:
-                        await renderImage(
-                            await getColoredImage(
-                                "smaller-rectangle",
-                                symbolColor
-                            )
-                        );
+                        await renderImage(coloredImage);
                         break;
                     case SHAPE.HEART:
-                        await renderImage(
-                            await getColoredImage("heart", symbolColor)
-                        );
+                        await renderImage(coloredImage);
                         break;
                 }
 
@@ -181,7 +208,7 @@ export default function Pattern({
                 }
             }
         })();
-    }, [canvasRef, shapePatterns, symbolColor]);
+    }, [canvasRef, shapePatterns]);
 
     return (
         <canvas
