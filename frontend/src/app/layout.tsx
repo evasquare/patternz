@@ -22,7 +22,7 @@ export const metadata: Metadata = {
             url: "/thumbnail.png",
             width: 1280,
             height: 720,
-            alt: "Patternz banner",
+            alt: "The image contains a large black-colored heart in the center on a white background.",
         },
         description: "Create a pattern in a really easy way.",
     },
