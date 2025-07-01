@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import ErrorScreen from "../components/ErrorScreen";
 import Pattern from "../components/Pattern";
 import config from "../lib/config.json";
 import { ShapePattern } from "../lib/patternType";
@@ -14,6 +15,7 @@ export default function Generate({
 }: {
     params: Promise<{ slug: string }>;
 }) {
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [url, setUrl] = useState("Getting URL..");
 
     useEffect(() => {
@@ -36,11 +38,22 @@ export default function Generate({
                 patterns: ShapePattern[];
             }
 
-            const response: GetResponse = await (
-                await fetch(`${config.publicApiUrl}/get/${slug}`)
-            ).json();
+            try {
+                const response = await fetch(
+                    `${config.publicApiUrl}/get/${slug}`
+                );
 
-            setDisplayingPatterns(response.patterns);
+                if (response.status === 404) {
+                    setErrorMessage(await response.text());
+                } else {
+                    const json: GetResponse = await response.json();
+                    setDisplayingPatterns(json.patterns);
+                }
+            } catch (e) {
+                if (e instanceof Error) {
+                    setErrorMessage(String(e));
+                }
+            }
         })();
     }, [params]);
 
@@ -58,6 +71,7 @@ export default function Generate({
 
     return (
         <>
+            {errorMessage ? <ErrorScreen errorMessage={errorMessage} /> : null}
             <>
                 <div className={styles.flexbox1}>
                     <div className={`${styles.flexbox2} ${styles.marginYTop}`}>
