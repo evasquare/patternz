@@ -19,17 +19,17 @@ const ClientProviders = ({ children }: { children: React.ReactNode }) => {
         }
     }, [pathName]);
 
-    const onload = () => {
+    useEffect(() => {
         const elements = document.getElementsByClassName("no-js");
         for (const element of elements) {
             element.classList.toggle("no-js", false);
             element.classList.toggle("hidden", true);
         }
         document.body.classList.toggle("scroll-lock", false);
-    };
+    }, []);
 
     return (
-        <div onLoad={onload}>
+        <div>
             <Background backgroundColors={backgroundColors} />
             {children}
         </div>
