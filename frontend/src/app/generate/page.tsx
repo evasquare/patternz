@@ -30,7 +30,7 @@ export default function Generate() {
     }, [isTaskFinished, isDelayOver, url]);
 
     const randomlyGeneratePatterns = () => {
-        const returningPatterns: ShapePattern[] = [];
+        const generatedPatterns: ShapePattern[] = [];
 
         for (let index = 0; index < 9; index++) {
             const shapeList = [
@@ -41,28 +41,29 @@ export default function Generate() {
                 SHAPE.SMALLER_RECTANGLE,
             ];
 
-            const selectedShape =
+            const shape =
                 shapeList[Math.floor(Math.random() * shapeList.length)];
-
-            const newGrid: boolean[][] = [];
+            const grid: boolean[][] = [];
 
             for (let index = 0; index < 3; index++) {
-                newGrid.push([]);
+                grid.push([]);
                 for (let index = 0; index < 3; index++) {
-                    const booleanList = [true, true, true, false, false];
+                    const booleanArray = [true, true, true, false, false];
                     const selectedBoolean =
-                        booleanList[
-                            Math.floor(Math.random() * booleanList.length)
+                        booleanArray[
+                            Math.floor(Math.random() * booleanArray.length)
                         ];
 
-                    newGrid[newGrid.length - 1].push(selectedBoolean);
+                    grid[grid.length - 1].push(selectedBoolean);
                 }
             }
-            const newPattern = { grid: newGrid, shape: selectedShape };
-            returningPatterns.push(newPattern);
+
+            const newPattern = { grid, shape };
+            generatedPatterns.push(newPattern);
         }
-        return returningPatterns;
+        return generatedPatterns;
     };
+
     useEffect(() => {
         (async () => {
             try {
@@ -92,9 +93,9 @@ export default function Generate() {
 
     return (
         <>
-            {isDelayOver && errorMessage ? (
+            {isDelayOver && errorMessage && (
                 <ErrorScreen errorMessage={errorMessage} />
-            ) : null}
+            )}
             <Loading />
         </>
     );

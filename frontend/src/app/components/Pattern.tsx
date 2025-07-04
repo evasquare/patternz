@@ -129,7 +129,6 @@ export default function Pattern({
 
     useEffect(() => {
         const shapesHistory: Shape[] = [];
-        const theme = THEME.GRAYSCALE;
 
         // Setting up canvas.
         const canvas = canvasRef.current;
@@ -213,6 +212,7 @@ export default function Pattern({
                 if (!coloredImage) {
                     return;
                 }
+
                 // Move to the next coordination.
                 drawingCord.x =
                     OUTER_GAP +

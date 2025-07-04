@@ -19,9 +19,7 @@ export default function Generate({
     const [url, setUrl] = useState("Getting URL..");
 
     useEffect(() => {
-        (async () => {
-            setUrl(window.location.href);
-        })();
+        setUrl(window.location.href);
     }, [params]);
 
     const [displayingPatterns, setDisplayingPatterns] = useState<
@@ -32,7 +30,7 @@ export default function Generate({
         (async () => {
             const { slug } = await params;
 
-            interface GetResponse {
+            interface JsonResponse {
                 id: number;
                 uuid: string;
                 patterns: ShapePattern[];
@@ -46,7 +44,7 @@ export default function Generate({
                 if (response.status === 404) {
                     setErrorMessage(await response.text());
                 } else {
-                    const json: GetResponse = await response.json();
+                    const json: JsonResponse = await response.json();
                     setDisplayingPatterns(json.patterns);
                 }
             } catch (e) {
@@ -72,66 +70,62 @@ export default function Generate({
     return (
         <>
             {errorMessage ? <ErrorScreen errorMessage={errorMessage} /> : null}
-            <>
-                <div className={styles.flexbox1}>
-                    <div className={`${styles.flexbox2} ${styles.marginYTop}`}>
-                        <Link href="/" className="hover">
-                            <Image
-                                src="/assets/buttons/home-button.svg"
-                                alt="home"
-                                width={50}
-                                height={50}
-                            />
-                        </Link>
-                    </div>
-                    <div className={styles.flexbox2}>
-                        <h2
-                            className={`${styles.h2TitleCenter} ${styles.removeHeadingDefaultMargin} ${styles.h2MarginBottom}`}
-                        >
-                            Done! Here&apos;s your pattern!
-                        </h2>
-                        <Link href={url} className={styles.urlLink}>
-                            {url}
-                        </Link>
+            <div className={styles.flexbox1}>
+                <div className={`${styles.flexbox2} ${styles.marginYTop}`}>
+                    <Link href="/" className="hover">
+                        <Image
+                            src="/assets/buttons/home-button.svg"
+                            alt="home"
+                            width={50}
+                            height={50}
+                        />
+                    </Link>
+                </div>
+                <div className={styles.flexbox2}>
+                    <h2
+                        className={`${styles.h2TitleCenter} ${styles.removeHeadingDefaultMargin} ${styles.h2MarginBottom}`}
+                    >
+                        Done! Here&apos;s your pattern!
+                    </h2>
+                    <Link href={url} className={styles.urlLink}>
+                        {url}
+                    </Link>
 
-                        <div className={styles.gap} />
+                    <div className={styles.gap} />
 
-                        <div className={styles.outputWrapper}>
-                            <div className={styles.output}>
-                                {displayingPatterns ? (
-                                    <Pattern
-                                        shapePatterns={displayingPatterns}
-                                    />
-                                ) : null}
-                            </div>
-                        </div>
-
-                        <div className={styles.gap} />
-
-                        <div className={styles.rowFlex}>
-                            <Link href={"/themes"}>
-                                <button className="hover">Change theme</button>
-                            </Link>
-                            <button className="hover" onClick={saveAsImage}>
-                                Save as image
-                            </button>
+                    <div className={styles.outputWrapper}>
+                        <div className={styles.output}>
+                            {displayingPatterns ? (
+                                <Pattern shapePatterns={displayingPatterns} />
+                            ) : null}
                         </div>
                     </div>
-                    <div className={styles.flexbox2}>
-                        <div
-                            className={`${styles.marginYBottom} ${styles.textBlackColor}`}
-                        >
-                            Developed by{" "}
-                            <a
-                                className={`${styles.textBlackColor} ${styles.textBold}`}
-                                href="https://github.com/evasquare"
-                            >
-                                Eva
-                            </a>
-                        </div>
+
+                    <div className={styles.gap} />
+
+                    <div className={styles.rowFlex}>
+                        <Link href={"/themes"}>
+                            <button className="hover">Change theme</button>
+                        </Link>
+                        <button className="hover" onClick={saveAsImage}>
+                            Save as image
+                        </button>
                     </div>
                 </div>
-            </>
+                <div className={styles.flexbox2}>
+                    <div
+                        className={`${styles.marginYBottom} ${styles.textBlackColor}`}
+                    >
+                        Developed by
+                        <a
+                            className={`${styles.textBlackColor} ${styles.textBold}`}
+                            href="https://github.com/evasquare"
+                        >
+                            Eva
+                        </a>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

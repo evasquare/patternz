@@ -6,7 +6,6 @@ export default function Loading() {
     return (
         <div className={styles.gradient}>
             <div className={styles.flexbox1}>
-                <div className={styles.flexbox2} />
                 <div className={styles.flexbox2}>
                     <div className={styles.rotating}>
                         <Image
@@ -17,7 +16,6 @@ export default function Loading() {
                         ></Image>
                     </div>
                 </div>
-                <div className={styles.flexbox2} />
             </div>
         </div>
     );

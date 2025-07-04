@@ -14,9 +14,9 @@ const ClientProviders = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         if (pathName === "/themes") {
             setBackgroundColors(["#999999"]);
-        } else {
-            setBackgroundColors(undefined);
+            return;
         }
+        setBackgroundColors(undefined);
     }, [pathName]);
 
     useEffect(() => {

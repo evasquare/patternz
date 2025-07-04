@@ -8,6 +8,7 @@ import styles from "./page.module.css";
 
 export default function Home() {
     const [selectedLogo, setSelectedLogo] = useState<ReactNode | null>(null);
+
     useEffect(() => {
         const logos = [
             <motion.img
@@ -90,35 +91,29 @@ export default function Home() {
     }, []);
 
     return (
-        <>
-            <div className={styles.flexbox1}>
-                <div className={styles.flexbox2}></div>
-                <div className={styles.flexbox2}>
-                    {selectedLogo ? (
-                        <div className={styles.imgContainer}>
-                            {selectedLogo}
-                        </div>
-                    ) : null}
-
-                    <h2>Create a pattern in a really easy way.</h2>
-                    <Link href={"/generate"}>
-                        <button className="hover">Generate</button>
-                    </Link>
-                </div>
-                <div className={styles.flexbox2}>
-                    <div
-                        className={`${styles.marginYBottom} ${styles.textBlackColor}`}
+        <div className={styles.flexbox1}>
+            <div className={styles.flexbox2}>
+                {selectedLogo && (
+                    <div className={styles.imgContainer}>{selectedLogo}</div>
+                )}
+                <h2>Create a pattern in a really easy way.</h2>
+                <Link href="/generate">
+                    <button className="hover">Generate</button>
+                </Link>
+            </div>
+            <div className={styles.flexbox2}>
+                <div
+                    className={`${styles.marginYBottom} ${styles.textBlackColor}`}
+                >
+                    Developed by
+                    <a
+                        className={`${styles.textBlackColor} ${styles.textBold}`}
+                        href="https://github.com/evasquare"
                     >
-                        Developed by{" "}
-                        <a
-                            className={`${styles.textBlackColor} ${styles.textBold}`}
-                            href="https://github.com/evasquare"
-                        >
-                            Eva
-                        </a>
-                    </div>
+                        Eva
+                    </a>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
