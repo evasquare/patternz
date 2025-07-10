@@ -164,8 +164,6 @@ export default function Home() {
                             <input
                                 type="checkbox"
                                 id="square"
-                                name="square"
-                                value="Square"
                                 checked={shapeOptions.square}
                                 onChange={() => {
                                     updateCheckBox(SHAPE.SQUARE);
@@ -177,8 +175,6 @@ export default function Home() {
                             <input
                                 type="checkbox"
                                 id="circle"
-                                name="circle"
-                                value="Circle"
                                 checked={shapeOptions.circle}
                                 onChange={() => {
                                     updateCheckBox(SHAPE.CIRCLE);
@@ -190,21 +186,17 @@ export default function Home() {
                             <input
                                 type="checkbox"
                                 id="diamond"
-                                name="diamond"
-                                value="Diamond"
                                 checked={shapeOptions.diamond}
                                 onChange={() => {
                                     updateCheckBox(SHAPE.DIAMOND);
                                 }}
                             />
-                            <label htmlFor="Diamond">Diamond</label>
+                            <label htmlFor="diamond">Diamond</label>
                         </div>
                         <div className={styles.shapeOption}>
                             <input
                                 type="checkbox"
                                 id="heart"
-                                name="heart"
-                                value="Heart"
                                 checked={shapeOptions.heart}
                                 onChange={() => {
                                     updateCheckBox(SHAPE.HEART);
@@ -216,14 +208,14 @@ export default function Home() {
                             <input
                                 type="checkbox"
                                 id="smallerRectangle"
-                                name="smallerRectangle"
-                                value="SmallerRectangle"
                                 checked={shapeOptions.smallerRectangle}
                                 onChange={() => {
                                     updateCheckBox(SHAPE.SMALLER_RECTANGLE);
                                 }}
                             />
-                            <label htmlFor="heart">Smaller Rectangle</label>
+                            <label htmlFor="smallerRectangle">
+                                Smaller Rectangle
+                            </label>
                         </div>
                     </div>
                 </div>
