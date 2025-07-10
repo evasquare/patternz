@@ -116,7 +116,7 @@ export default function Generate({
                     <div
                         className={`${styles.marginYBottom} ${styles.textBlackColor}`}
                     >
-                        Developed by
+                        Developed by{" "}
                         <a
                             className={`${styles.textBlackColor} ${styles.textBold}`}
                             href="https://github.com/evasquare"

@@ -33,13 +33,48 @@ export default function Generate() {
         const generatedPatterns: ShapePattern[] = [];
 
         for (let index = 0; index < 9; index++) {
-            const shapeList = [
+            let shapeList = [
                 SHAPE.SQUARE,
                 SHAPE.CIRCLE,
                 SHAPE.DIAMOND,
                 SHAPE.HEART,
                 SHAPE.SMALLER_RECTANGLE,
             ];
+
+            const shapeOptions: ShapeOptions = JSON.parse(
+                localStorage.getItem("shapeOptions") ?? "{}"
+            );
+
+            if (Object.keys(shapeOptions).length != 0) {
+                let hasAtLeastOneShape = false;
+
+                shapeList = [];
+                if (shapeOptions.square) {
+                    hasAtLeastOneShape = true;
+                    shapeList.push(SHAPE.SQUARE);
+                }
+                if (shapeOptions.circle) {
+                    hasAtLeastOneShape = true;
+                    shapeList.push(SHAPE.CIRCLE);
+                }
+                if (shapeOptions.diamond) {
+                    hasAtLeastOneShape = true;
+                    shapeList.push(SHAPE.DIAMOND);
+                }
+                if (shapeOptions.heart) {
+                    hasAtLeastOneShape = true;
+                    shapeList.push(SHAPE.HEART);
+                }
+                if (shapeOptions.smallerRectangle) {
+                    hasAtLeastOneShape = true;
+                    shapeList.push(SHAPE.SMALLER_RECTANGLE);
+                }
+
+                if (!hasAtLeastOneShape) {
+                    setErrorMessage("At least one shape has to be enabled.");
+                    throw new Error("At least one shape has to be enabled.");
+                }
+            }
 
             const shape =
                 shapeList[Math.floor(Math.random() * shapeList.length)];
@@ -83,9 +118,7 @@ export default function Generate() {
                 setIsTaskFinished(true);
             } catch (e) {
                 if (e instanceof Error) {
-                    setErrorMessage(
-                        String(e) + " The server might be down at this moment."
-                    );
+                    setErrorMessage(String(e));
                 }
             }
         })();
